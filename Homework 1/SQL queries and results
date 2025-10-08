@@ -1,0 +1,32 @@
+--Question 1
+--Question 2
+
+SELECT song_title 
+FROM song 
+WHERE song_code IN (
+  SELECT song_code
+  FROM composed_of
+  WHERE cd_code = (
+    SELECT cd_code 
+    FROM cd
+    WHERE cd = 'Midnights'
+    )
+  )
+ORDER BY song_title;
+
+--Question 4
+SELECT year, AVG(number_sold)
+FROM cd
+WHERE group_code = 'Group_10'
+GROUP BY year
+ORDER BY AVG(number_sold) desc; 
+
+--Question 5
+SELECT cd_title, number_sold
+FROM cd
+WHERE number_sold > (
+	SELECT AVG(number_sold)
+	FROM cd
+	WHERE group_code = ‘Group_10’
+)
+ORDER BY number_sold desc;
