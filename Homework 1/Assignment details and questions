@@ -1,0 +1,49 @@
+Using the Music Agency Enterprise:
+1. Create the DDL/DML script for the Music Database using the music1.txt file and run the
+script in PostgreSQL. This file is available together with this PDF file in Sakai
+2. Develop SQL solutions for the six queries specified in this assignment.
+
+Music Agency Relational Database Schema (given to us from the professor) 
+  recordingLabel(labelID, labelName, location)
+  cd(cdCode, cdTitle, numberSold, year, labelID, groupCode)
+  song(songCode, songTitle)
+  musicalGroup(groupCode, groupName)
+  artist(artistID, firstName, lastName, yearBorn)
+  topCDs(cdCode, year, rating)
+  composedOf (cdCode, songCode, trackNumber)
+  topSongs(songCode, year, rating)
+  member(groupCode, artistID, fromDate, toDate)
+  writtenBy(songCode, artistID)
+
+1.[16 points] List the artist who was born in 1989. Provide their artist ID, first name, and
+last name.
+Output Schema: (artist id, first name, last name)
+
+2. [16 points] List all the songs from the ’Midnights’ CD. In your output, provide only the
+song titles. Order the song titles in alphabetical order.
+Output Schema: (song title)
+
+3. [17 points] How many of ’Artist 16’s (artist ID) songs have reached #1 in the top song
+ratings? Your output should be a single number.
+Output Schema: (num songs)
+
+4. [17 points] What is the average number of CDs sold per year by ’Group 10’ (group
+code)? In your output, provide the year and average number of sales per year. For
+example, if in 2022, ’Group 10’ had sold 3 CDs, the first CD sold 10,0000, the second
+CD sold 20,000 copies, and the third CD sold 30,000 copies, your output would be (2022,
+20,000). Order the sales by year in descending order. Hint : You do not need any join
+operations.
+Output Schema: (year, avg sales)
+
+5. [17 points] Which ’Group 10’ (group code) CDs sold more than the average as compared
+to all of ’Group 10’s CDs? List the CD titles and number sold. Order the albums in
+descending order by the number sold. Hint : How can you adapt your answer from
+Question 4?
+Output Schema: (cd title, number sold)
+
+6. [17 points] Find all years where Taylor Swift (with artist id = ’Artist 16’ and group code
+= ’Group 10’) had multiple #1 rated hits, either CDs (recorded by Taylor Swift’s group)
+or songs (written by Taylor Swift). List the year and the count of number one hits. Order
+the results by year in ascending order. Hint : You will need to make simultaneous use of
+artist id = ’Artist 16’ and group code = ’Group 10’.
+Output Schema: (year, number one hits)
