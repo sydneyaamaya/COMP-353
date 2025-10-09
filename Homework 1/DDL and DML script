@@ -157,10 +157,8 @@ VALUES
 CREATE TABLE top_cds
 (
     cd_code VARCHAR(50) PRIMARY KEY,
-    year INT PRIMARY KEY, 
-    rating INT, 
-    FOREIGN KEY (cd_code) 
-        REFERENCES cd(cd_code)
+    year INT,
+    rating INT
 );
 
 INSERT INTO top_cds(cd_code, year, rating)
@@ -429,7 +427,7 @@ VALUES
 -- Lower rating numbers indicate higher chart positions (1 = #1 hit)
 CREATE TABLE top_songs(
     song_code VARCHAR(50) PRIMARY KEY,
-    year INT PRIMARY KEY,
+    year INT,
     rating INT,
     FOREIGN KEY (song_code)
         REFERENCES song(song_code)
