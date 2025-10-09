@@ -1,4 +1,8 @@
 --Question 1
+SELECT artist_id, first_name, last_name
+FROM artist
+WHERE year_born = 1989;
+
 --Question 2
 
 SELECT song_title 
@@ -13,6 +17,13 @@ WHERE song_code IN (
     )
   )
 ORDER BY song_title;
+
+--Question 3 
+SELECT COUNT (*) num_songs
+FROM top_songs, written_by
+WHERE top_songs.song_code = written_by.song_code
+	AND written_by.artist_id = 'Artist_16'
+	AND top_songs.rating = 1;
 
 --Question 4
 SELECT year, AVG(number_sold)
@@ -30,3 +41,63 @@ WHERE number_sold > (
 	WHERE group_code = ‘Group_10’
 )
 ORDER BY number_sold desc;
+
+--Question 6
+SELECT year,
+       (
+         -- Count #1 CDs by Taylor Swift’s group
+         (SELECT COUNT(*)
+          FROM top_cds
+          WHERE rating = 1
+            AND cd_code IN (
+                SELECT cd_code
+                FROM cd
+                WHERE group_code = 'Group_10'
+            )
+            AND year = t.year
+         )
+         +
+         -- Count #1 songs written by Taylor Swift
+         (SELECT COUNT(*)
+          FROM top_songs
+          WHERE rating = 1
+            AND song_code IN (
+                SELECT song_code
+                FROM written_by
+                WHERE artist_id = 'Artist_16'
+            )
+            AND year = t.year
+         )
+       ) AS number_one_hits
+FROM (
+    -- Get all distinct years where either CDs or songs could have #1 hits
+    SELECT DISTINCT year
+    FROM top_cds
+    UNION
+    SELECT DISTINCT year
+    FROM top_songs
+) t
+WHERE (
+        (SELECT COUNT(*)
+         FROM top_cds
+         WHERE rating = 1
+           AND cd_code IN (
+               SELECT cd_code
+               FROM cd
+               WHERE group_code = 'Group_10'
+           )
+           AND year = t.year
+        )
+        +
+        (SELECT COUNT(*)
+         FROM top_songs
+         WHERE rating = 1
+           AND song_code IN (
+               SELECT song_code
+               FROM written_by
+               WHERE artist_id = 'Artist_16'
+           )
+           AND year = t.year
+        )
+      ) > 1
+ORDER BY year ASC;
